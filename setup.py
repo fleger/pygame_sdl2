@@ -139,18 +139,10 @@ headers = [
     ]
 
 if __name__ == "__main__":
-
-
-    if sys.version_info.major <= 3 and sys.version_info.minor <= 11:
-        py_headers = headers
-        headers = [ ]
-    else:
-        py_headers = [ ]
-
     setup(
         "pygame_sdl2",
         VERSION,
-        headers=py_headers,
+        headers=headers,
         url="https://github.com/renpy/pygame_sdl2",
         maintainer="Tom Rothamel",
         maintainer_email="tom@rothamel.us",
@@ -161,21 +153,3 @@ if __name__ == "__main__":
     for i in temporary_package_data:
         os.unlink(os.path.join(os.path.dirname(__file__), "src", "pygame_sdl2", i))
 
-    if headers:
-        import pathlib
-
-        virtual_env = os.environ.get("VIRTUAL_ENV", None)
-
-        if virtual_env:
-            headers_dir = pathlib.Path(virtual_env) / "include" / "pygame_sdl2"
-        else:
-            import sysconfig
-            headers_dir = pathlib.Path(sysconfig.get_paths()['include']) / "pygame_sdl2"
-
-        headers_dir.mkdir(parents=True, exist_ok=True)
-
-        for header in headers:
-            srcpath = pathlib.Path(header)
-            dstpath = headers_dir / srcpath.name
-
-            shutil.copy(srcpath, dstpath)
