@@ -169,6 +169,7 @@ if __name__ == "__main__":
         if virtual_env:
             headers_dir = pathlib.Path(virtual_env) / "include" / "pygame_sdl2"
         else:
+            import sysconfig
             headers_dir = pathlib.Path(sysconfig.get_paths()['include']) / "pygame_sdl2"
 
         headers_dir.mkdir(parents=True, exist_ok=True)
